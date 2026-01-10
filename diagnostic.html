@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotle Diagnostic</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 15px;
+            background: #f5f5f5;
+            font-size: 14px;
+        }
+        h1 { color: #8B2635; margin-bottom: 15px; font-size: 1.5rem; }
+        .status {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ccc;
+        }
+        .status.ok { border-left-color: #4CAF50; }
+        .status.error { border-left-color: #f44336; }
+        .status.warn { border-left-color: #ff9800; }
+        .label { font-weight: bold; color: #333; }
+        .value { color: #666; word-break: break-all; }
+        
+        .test-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .dropdown {
+            display: none;
+            background: white;
+            border: 2px solid #333;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .dropdown.active { display: block; }
+        .dropdown-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .dropdown-item:active { background: #f0f0f0; }
+        
+        #log {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Quotle Diagnostic</h1>
+    
+    <div id="checks"></div>
+    
+    <h2 style="margin: 20px 0 10px;">Test Dropdown:</h2>
+    <input type="text" id="test-input" class="test-input" placeholder="Type 'soc' here...">
+    <div id="dropdown" class="dropdown"></div>
+    
+    <h2 style="margin: 20px 0 10px;">Console Log:</h2>
+    <div id="log"></div>
+
+    <script>
+        // Override console.log to show in page
+        const logEl = document.getElementById('log');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        function addLog(msg, type = 'log') {
+            const time = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌ ' : type === 'warn' ? '⚠️ ' : '✓ ';
+            logEl.textContent = `[${time}] ${prefix}${msg}\n` + logEl.textContent;
+            originalLog(msg);
+        }
+        
+        console.log = function(...args) {
+            addLog(args.join(' '), 'log');
+        };
+        console.error = function(...args) {
+            addLog(args.join(' '), 'error');
+        };
+        
+        // Catch all errors
+        window.onerror = function(msg, url, line, col, error) {
+            addLog(`ERROR at line ${line}: ${msg}`, 'error');
+            return false;
+        };
+        
+        addLog('Diagnostic page loaded');
+        
+        // Run checks
+        const checks = document.getElementById('checks');
+        
+        function addCheck(label, value, status) {
+            const div = document.createElement('div');
+            div.className = `status ${status}`;
+            div.innerHTML = `<span class="label">${label}:</span> <span class="value">${value}</span>`;
+            checks.appendChild(div);
+        }
+        
+        // Check 1: JavaScript works
+        addCheck('JavaScript', 'Working ✓', 'ok');
+        addLog('JavaScript execution OK');
+        
+        // Check 2: Document ready
+        addCheck('Document', document.readyState, document.readyState === 'loading' ? 'warn' : 'ok');
+        
+        // Check 3: User Agent
+        addCheck('Browser', navigator.userAgent.substring(0, 80) + '...', 'ok');
+        addLog('User agent: ' + navigator.userAgent);
+        
+        // Check 4: Screen size
+        addCheck('Screen', `${window.innerWidth}x${window.innerHeight}`, 'ok');
+        
+        // Check 5: Touch support
+        const hasTouch = 'ontouchstart' in window;
+        addCheck('Touch', hasTouch ? 'Supported' : 'Not detected', hasTouch ? 'ok' : 'warn');
+        
+        // Test data
+        const testAuthors = ['Socrates', 'Plato', 'Aristotle', 'Marcus Aurelius', 'Seneca', 'Solomon', 'Somerset Maugham'];
+        addCheck('Test Authors', testAuthors.length + ' loaded', 'ok');
+        addLog('Test authors: ' + testAuthors.join(', '));
+        
+        // Simple dropdown test
+        const input = document.getElementById('test-input');
+        const dropdown = document.getElementById('dropdown');
+        
+        input.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            addLog('Input: "' + query + '"');
+            
+            if (query.length === 0) {
+                dropdown.classList.remove('active');
+                return;
+            }
+            
+            const matches = testAuthors.filter(a => a.toLowerCase().includes(query));
+            addLog('Matches: ' + matches.length + ' - ' + matches.join(', '));
+            
+            dropdown.innerHTML = '';
+            matches.forEach(author => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.textContent = author;
+                item.addEventListener('click', function() {
+                    addLog('Selected: ' + author);
+                    input.value = author;
+                    dropdown.classList.remove('active');
+                });
+                dropdown.appendChild(item);
+            });
+            
+            dropdown.classList.add('active');
+            addLog('Dropdown shown with ' + matches.length + ' items');
+        });
+        
+        input.addEventListener('focus', function() {
+            addLog('Input focused');
+        });
+        
+        addLog('All checks complete - try typing in the input above');
+    </script>
+</body>
+</html>
