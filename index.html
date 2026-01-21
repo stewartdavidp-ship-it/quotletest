@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <meta name="version" content="1.0.0">
     <title>Quotle - Daily Quote Puzzle</title>
     
     <!-- Early initialization: Set defaults and apply dark mode BEFORE any CSS renders -->
@@ -9742,9 +9743,6 @@
         }
         
         function initGame() {
-            console.log('🎮 initGame() starting...');
-            console.log('🎮 data-theme:', document.documentElement.getAttribute('data-theme'));
-            console.log('🎮 body classes:', document.body.className);
             debugLog('initGame() called');
             
             // Apply dark mode immediately
@@ -9761,17 +9759,14 @@
             
             // Get daily quote
             dailyQuoteIndex = getDailyQuoteIndex();
-            console.log('🎮 Daily quote index:', dailyQuoteIndex, 'of', quotes.length);
-            
             currentQuote = quotes[dailyQuoteIndex];
             
             if (!currentQuote) {
-                console.error('❌ No quote found at index', dailyQuoteIndex);
+                console.error('No quote found at index', dailyQuoteIndex);
                 document.getElementById('quote-display').textContent = 'Error loading quote. Please refresh.';
                 return;
             }
             
-            console.log('🎮 Quote loaded:', currentQuote.author);
             debugLog('Quote index: ' + dailyQuoteIndex);
             debugLog('Quote loaded');
             
@@ -9781,15 +9776,12 @@
             
             // Display quote (remove trailing period if present)
             const quoteText = currentQuote.text.replace(/\.$/, '');
-            console.log('🎮 Setting quote text:', quoteText.substring(0, 50) + '...');
             const quoteDisplay = document.getElementById('quote-display');
             if (!quoteDisplay) {
-                console.error('❌ quote-display element not found!');
+                console.error('quote-display element not found!');
                 return;
             }
-            console.log('🎮 quote-display element found, setting text...');
             quoteDisplay.textContent = quoteText;
-            console.log('🎮 Quote text set. Current content:', quoteDisplay.textContent.substring(0, 30));
             debugLog('Quote displayed');
             
             // Initialize autocomplete
@@ -9826,12 +9818,6 @@
             
             // Show today's challenge badge
             showChallengeBadge(currentQuote);
-            
-            // Final visibility check
-            console.log('🎮 Final checks:');
-            console.log('  - game-area display:', document.getElementById('game-area').style.display);
-            console.log('  - quote-display content:', document.getElementById('quote-display').textContent.substring(0, 30) + '...');
-            console.log('  - quote-display computed style:', window.getComputedStyle(document.getElementById('quote-display')).display);
             
             // Create attempt dots
             updateAttempts();
@@ -10607,10 +10593,7 @@
             
             // Filter dropdown in easy mode (only if not correct and attempts remaining)
             if (gameDifficulty === 'easy' && !isCorrect && attemptsLeft > 0) {
-                console.log('✅ CALLING filterAuthorDropdown - Easy mode, wrong answer, attempts left: ' + attemptsLeft);
                 filterAuthorDropdown(guessedQuote);
-            } else {
-                console.log('❌ NOT filtering - difficulty=' + gameDifficulty + ', isCorrect=' + isCorrect + ', attemptsLeft=' + attemptsLeft);
             }
             
             // Show give up button after first guess
@@ -10694,18 +10677,13 @@
             const categoryMatch = guessedQuote.category === currentQuote.category;
             const periodMatch = guessedQuote.period === currentQuote.period;
             
-            console.log('🔍 FILTERING: gender=' + genderMatch + ', category=' + categoryMatch + ', period=' + periodMatch);
-            console.log('🔍 Looking for: gender=' + currentQuote.gender + ', category=' + currentQuote.category + ', period=' + currentQuote.period);
-            console.log('🔍 Guessed: gender=' + guessedQuote.gender + ', category=' + guessedQuote.category + ', period=' + guessedQuote.period);
-            console.log('🔍 Eligible authors before filter: ' + eligibleAuthors.length);
-            
             // Filter from current eligible authors (cumulative filtering)
             eligibleAuthors.forEach(author => {
                 const authorQuote = quotes.find(q => q.author === author);
                 
                 // Safety check - skip if no quote found for author
                 if (!authorQuote) {
-                    console.warn('⚠️ No quote found for author: ' + author);
+                    console.warn('No quote found for author: ' + author);
                     return;
                 }
                 
@@ -10727,8 +10705,6 @@
                 }
             });
             
-            console.log('🔍 Eligible authors after filter: ' + matchingAuthors.length);
-            
             // Update both eligible and current authors
             eligibleAuthors = matchingAuthors;
             currentAuthors = [...matchingAuthors];
@@ -10740,15 +10716,6 @@
             
             // Add visual class to show filtering is active
             input.classList.add('filtered');
-            
-            // Show a brief toast message
-            const filterMsg = [];
-            if (genderMatch) filterMsg.push('Gender ✓');
-            if (categoryMatch) filterMsg.push('Category ✓');
-            if (periodMatch) filterMsg.push('Period ✓');
-            if (filterMsg.length > 0) {
-                console.log('🎯 Filtered by: ' + filterMsg.join(', ') + ' → ' + count + ' authors');
-            }
         }
         
         function showFeedback(guessedAuthor, guessedQuote, isCorrect) {
