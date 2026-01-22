@@ -1,0 +1,24 @@
+quotle v1.0.4 Release Notes
+================================
+
+Release Date: 2026-01-22
+
+Changes in v1.0.4:
+------------------
+- Added gs-app-id meta tag for reliable app detection
+- Google Analytics 4 tracking (G-XRL2SVN0YF)
+- Fixed all version strings for consistency
+
+Version Locations:
+-----------------
+- Meta tag: 1.0.4
+- Service Worker: v1.0.4
+- About/Info UI: v1.0.4
+- (Game Shelf Module: 1.0.2 - separate)
+
+Files Included:
+--------------
+- index.html (main app)
+- sw.js (service worker)
+- manifest.json (PWA manifest)
+- icons/ (PWA icons)

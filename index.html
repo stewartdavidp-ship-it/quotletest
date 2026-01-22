@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XRL2SVN0YF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XRL2SVN0YF');
+    </script>
+    
+
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-    <meta name="version" content="1.0.2">
+    <meta name="version" content="1.0.4">
+    <meta name="gs-app-id" content="quotle">
     <title>Quotle - Daily Quote Puzzle</title>
     
     <!-- Early initialization: Set defaults and apply dark mode BEFORE any CSS renders -->
@@ -24,6 +35,15 @@
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#8B2635">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Quotle">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="Daily quote guessing game. Identify the author in 4 tries! Featuring wisdom from ancient philosophers to literary giants.">
@@ -3434,7 +3454,7 @@
                     <p><strong>Quote #:</strong> <span id="current-quote-number">Loading...</span></p>
                     <p><strong>Total Quotes:</strong> 365</p>
                     <p><strong>Days Live:</strong> <span id="days-since-launch">Loading...</span></p>
-                    <p><strong>Version:</strong> v1.0.2</p>
+                    <p><strong>Version:</strong> v1.0.4</p>
                 </div>
                 <p style="margin-top: 10px; font-size: 0.85rem; color: var(--slate); line-height: 1.5;">
                     A daily quote guessing game featuring wisdom from ancient philosophers to modern thinkers - spanning over 2,500 years of human thought.
@@ -11171,7 +11191,7 @@
             name: 'Quotle',
             icon: '💬',
             url: 'quotle.game',
-            version: '1.0.2',
+            version: '1.0.4',
             type: 'daily'
         });
         
@@ -11192,6 +11212,136 @@
         
         // Start game on load
         initGame();
+    </script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        // Register service worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('[Quotle] SW registered:', registration.scope);
+                        
+                        // Check for updates periodically
+                        setInterval(() => {
+                            registration.update();
+                        }, 60 * 60 * 1000); // Check every hour
+                        
+                        // Listen for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New version available
+                                    console.log('[Quotle] New version available');
+                                    if (confirm('A new version of Quotle is available! Reload to update?')) {
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        });
+                    })
+                    .catch((error) => {
+                        console.log('[Quotle] SW registration failed:', error);
+                    });
+            });
+            
+            // Handle SW messages
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data.type === 'SW_UPDATED') {
+                    console.log('[Quotle] SW updated to:', event.data.version);
+                }
+            });
+        }
+        
+        // PWA Install Prompt
+        let deferredInstallPrompt = null;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            
+            // Show install button if not already installed
+            if (!window.matchMedia('(display-mode: standalone)').matches) {
+                showInstallButton();
+            }
+        });
+        
+        function showInstallButton() {
+            // Check if we already showed install prompt this session
+            if (sessionStorage.getItem('quotle_install_prompted')) return;
+            
+            // Create install banner
+            const banner = document.createElement('div');
+            banner.id = 'pwa-install-banner';
+            banner.innerHTML = `
+                <div style="
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: linear-gradient(135deg, #8B2635, #6B1D29);
+                    color: white;
+                    padding: 12px 20px;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    z-index: 9999;
+                    font-family: 'Source Serif 4', serif;
+                    max-width: 90%;
+                ">
+                    <span style="font-size: 1.5rem;">📖</span>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600;">Install Quotle</div>
+                        <div style="font-size: 0.85rem; opacity: 0.9;">Add to home screen for the best experience</div>
+                    </div>
+                    <button onclick="installPWA()" style="
+                        background: white;
+                        color: #8B2635;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">Install</button>
+                    <button onclick="dismissInstallBanner()" style="
+                        background: transparent;
+                        border: none;
+                        color: white;
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        padding: 4px;
+                        opacity: 0.7;
+                    ">✕</button>
+                </div>
+            `;
+            document.body.appendChild(banner);
+        }
+        
+        function installPWA() {
+            if (!deferredInstallPrompt) return;
+            
+            deferredInstallPrompt.prompt();
+            deferredInstallPrompt.userChoice.then((choice) => {
+                console.log('[Quotle] Install choice:', choice.outcome);
+                deferredInstallPrompt = null;
+                dismissInstallBanner();
+            });
+        }
+        
+        function dismissInstallBanner() {
+            const banner = document.getElementById('pwa-install-banner');
+            if (banner) banner.remove();
+            sessionStorage.setItem('quotle_install_prompted', 'true');
+        }
+        
+        // Check if running as installed PWA
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('[Quotle] Running as installed PWA');
+        }
     </script>
 </body>
 </html>
