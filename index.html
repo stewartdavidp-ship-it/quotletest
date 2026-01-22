@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-    <meta name="version" content="1.0.0">
+    <meta name="version" content="1.0.1">
     <title>Quotle - Daily Quote Puzzle</title>
     
     <!-- Early initialization: Set defaults and apply dark mode BEFORE any CSS renders -->
@@ -3433,7 +3434,7 @@
                     <p><strong>Quote #:</strong> <span id="current-quote-number">Loading...</span></p>
                     <p><strong>Total Quotes:</strong> 365</p>
                     <p><strong>Days Live:</strong> <span id="days-since-launch">Loading...</span></p>
-                    <p><strong>Version:</strong> v1.0.0</p>
+                    <p><strong>Version:</strong> v1.0.1</p>
                 </div>
                 <p style="margin-top: 10px; font-size: 0.85rem; color: var(--slate); line-height: 1.5;">
                     A daily quote guessing game featuring wisdom from ancient philosophers to modern thinkers - spanning over 2,500 years of human thought.
@@ -3446,6 +3447,35 @@
                 <button type="button" class="action-btn danger" onclick="resetGameFromMenu()">Reset Statistics</button>
                 <p class="section-desc" style="margin-top: 10px;">
                     <strong>Copyright:</strong> All quotes are from public domain sources. Authors represented died before 1955 or their works have entered the public domain.
+                </p>
+            </div>
+            
+            <!-- Game Shelf Badge -->
+            <div class="modal-section" style="text-align: center; padding: 20px 15px; background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%); border-radius: 12px; margin-top: 15px;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 10px;">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 40px; height: 40px;">
+                        <defs>
+                            <linearGradient id="gsBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea"/>
+                                <stop offset="100%" style="stop-color:#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="5" y="5" width="90" height="90" rx="20" fill="url(#gsBadgeGrad)"/>
+                        <g transform="rotate(-12, 35, 50)">
+                            <rect x="15" y="28" width="28" height="36" rx="4" fill="white"/>
+                            <circle cx="43" cy="46" r="6" fill="white"/>
+                            <text x="29" y="54" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#667eea" text-anchor="middle">G</text>
+                        </g>
+                        <g transform="rotate(12, 65, 50)">
+                            <rect x="57" y="28" width="28" height="36" rx="4" fill="rgba(255,255,255,0.9)"/>
+                            <circle cx="57" cy="46" r="6" fill="url(#gsBadgeGrad)"/>
+                            <text x="71" y="54" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#764ba2" text-anchor="middle">S</text>
+                        </g>
+                    </svg>
+                    <span style="font-size: 1.1rem; font-weight: 600; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">A Game Shelf Original</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--slate); margin: 0;">
+                    Track your daily puzzles at <a href="https://gameshelf.club" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 500;">gameshelf.club</a>
                 </p>
             </div>
         </div>
@@ -3689,10 +3719,10 @@
 
     <!-- Game Shelf Integration Module -->
     <script>
-        // ============ GAME SHELF INTEGRATION MODULE v1.0.0 ============
+        // ============ GAME SHELF INTEGRATION MODULE v1.0.1 ============
         (function() {
             'use strict';
-            const GAMESHELF_VERSION = '1.0.0';
+            const GAMESHELF_VERSION = '1.0.1';
             if (window.GameShelfIntegration) return;
             
             window.GameShelfIntegration = {
@@ -3708,7 +3738,7 @@
                         name: config.name || gameId,
                         icon: config.icon || '🎮',
                         url: config.url || window.location.hostname,
-                        version: config.version || '1.0.0',
+                        version: config.version || '1.0.1',
                         type: config.type || 'daily',
                         ...config
                     };
@@ -11141,7 +11171,7 @@
             name: 'Quotle',
             icon: '💬',
             url: 'quotle.game',
-            version: '1.0.0',
+            version: '1.0.1',
             type: 'daily'
         });
         
