@@ -109,7 +109,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: 
+            background-image:
                 repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.01) 2px, rgba(0,0,0,0.01) 4px);
             pointer-events: none;
             z-index: 1;
@@ -1171,11 +1171,11 @@
         }
         
         @keyframes confettiFall {
-            0% { 
+            0% {
                 transform: translateY(-100vh) rotate(0deg);
                 opacity: 1;
             }
-            100% { 
+            100% {
                 transform: translateY(100vh) rotate(720deg);
                 opacity: 0;
             }
@@ -3720,7 +3720,7 @@
                 reportComplete: function(result) {
                     if (!this._initialized) return null;
                     const payload = this._buildPayload(result);
-                    this._storeResult(payload);
+                    // Removed: this._storeResult(payload) - copy/paste is now standard
                     this._dispatchEvents(payload);
                     return payload;
                 },
@@ -8568,7 +8568,7 @@
             { id: 'phil_5', name: 'Thinker', icon: '🤔', desc: 'Win 5 Philosophy quotes', check: (s) => (s.categoryWins?.Philosophy || 0) >= 5 },
             { id: 'phil_25', name: 'Philosopher', icon: '🧠', desc: 'Win 25 Philosophy quotes', check: (s) => (s.categoryWins?.Philosophy || 0) >= 25 },
             
-            // Period Mastery Achievements  
+            // Period Mastery Achievements
             { id: 'ancient_10', name: 'Classicist', icon: '🏺', desc: 'Win 10 Ancient quotes', check: (s) => (s.periodWins?.Ancient || 0) >= 10 },
             { id: 'modern_10', name: 'Modernist', icon: '🎩', desc: 'Win 10 1900s quotes', check: (s) => (s.periodWins?.['1900s'] || 0) >= 10 },
             
@@ -9111,7 +9111,7 @@
             document.getElementById('quote-display').textContent = currentQuote.text;
             
             const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            document.getElementById('subtitle-text').innerHTML = 
+            document.getElementById('subtitle-text').innerHTML =
                 `Quote #${currentQuote.index} • ${dateStr} <span class="practice-badge">Practice</span>`;
             
             // Reset game area
@@ -9527,8 +9527,8 @@
             // Click outside to close dropdown
             document.addEventListener('click', function(e) {
                 // Don't close if clicking on dropdown items or the wrapper
-                if (!e.target.closest('.autocomplete-wrapper') && 
-                    !e.target.closest('.autocomplete-dropdown') && 
+                if (!e.target.closest('.autocomplete-wrapper') &&
+                    !e.target.closest('.autocomplete-dropdown') &&
                     !e.target.closest('.dropdown-backdrop')) {
                     dropdown.classList.remove('active');
                     dropdown.style.display = 'none'; // Force hide
@@ -9911,9 +9911,9 @@
             setTimeout(() => {
                 const gameOverScreen = document.getElementById('game-over-screen');
                 if (gameOverScreen) {
-                    gameOverScreen.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
+                    gameOverScreen.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 }
             }, 100);
@@ -10296,7 +10296,7 @@
                 
                 'Walt Whitman': `Walt Whitman (1819-1892) self-published "Leaves of Grass" in 1855, a revolutionary collection that celebrated democracy, the body, and the American landscape in free verse of unprecedented scope and intimacy. Emerson hailed it as "the most extraordinary piece of wit and wisdom America has yet contributed."\n\nWhitman continually revised and expanded the book throughout his life. During the Civil War, he volunteered as a nurse in Washington hospitals, experiences that deepened his poetry's compassion and his vision of American identity.\n\nWhitman's influence on American poetry is foundational—his free verse, his celebration of ordinary experience, and his democratic embrace of all people opened possibilities that poets from Ginsberg to contemporary spoken word artists continue to explore.`,
                 
-                // 20th Century figures  
+                // 20th Century figures
                 'Albert Einstein': `Albert Einstein (1879-1955) transformed our understanding of space, time, matter, and energy with his theories of special and general relativity. His equation E=mc² revealed the enormous energy locked in matter, with consequences that shaped the atomic age.\n\nForced to flee Nazi Germany in 1933, he spent his final decades at Princeton, working toward a unified field theory and advocating for pacifism, civil rights, and world government. His letter to Roosevelt warning of German atomic bomb research helped launch the Manhattan Project—a decision he later regretted.\n\nEinstein's scientific genius made him a global celebrity and symbol of intellectual achievement. His humanitarian activism, from Zionism to nuclear disarmament, demonstrated his belief that scientists bear moral responsibility for how their discoveries are used.`,
                 
                 'Mahatma Gandhi': `Mahatma Gandhi (1869-1948) led India to independence through nonviolent civil disobedience, inspiring movements for civil rights and freedom across the world. His philosophy of satyagraha—truth-force—combined spiritual discipline with political action.\n\nTrained as a lawyer in London, Gandhi developed his methods of nonviolent resistance while fighting discrimination against Indians in South Africa. Returning to India, he transformed the independence movement through campaigns of non-cooperation, salt marches, and fasting.\n\nGandhi's influence extends far beyond India. Martin Luther King Jr., Nelson Mandela, and countless other activists adopted his methods. His vision of a simple, self-sufficient society and his experiments with communal living continue to inspire alternative communities and sustainability movements.`,
@@ -10420,8 +10420,8 @@
             utterance.volume = 1.0;
             
             // Try to use a high-quality voice
-            const preferredVoice = voices.find(voice => 
-                voice.lang.startsWith('en') && 
+            const preferredVoice = voices.find(voice =>
+                voice.lang.startsWith('en') &&
                 (voice.name.includes('Premium') || voice.name.includes('Enhanced') || voice.name.includes('Google'))
             ) || voices.find(voice => voice.lang.startsWith('en'));
             
@@ -10559,8 +10559,8 @@
             const isCorrect = guessedAuthor === currentQuote.author;
             
             // Store guess with details for filtering
-            guesses.push({ 
-                author: guessedAuthor, 
+            guesses.push({
+                author: guessedAuthor,
                 correct: isCorrect,
                 gender: guessedQuote.gender,
                 category: guessedQuote.category,
@@ -11055,9 +11055,9 @@
             setTimeout(() => {
                 const gameOverScreen = document.getElementById('game-over-screen');
                 if (gameOverScreen) {
-                    gameOverScreen.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
+                    gameOverScreen.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 }
             }, 100);
@@ -11141,7 +11141,7 @@
             name: 'Quotle',
             icon: '💬',
             url: 'quotle.game',
-            version: '1.1.0',
+            version: '1.0.0',
             type: 'daily'
         });
         
