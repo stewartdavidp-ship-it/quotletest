@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-    <meta name="version" content="1.0.1">
+    <meta name="version" content="1.0.2">
     <title>Quotle - Daily Quote Puzzle</title>
     
     <!-- Early initialization: Set defaults and apply dark mode BEFORE any CSS renders -->
@@ -2869,7 +2869,7 @@
                     break;
                 case 'synced':
                     indicator.style.display = 'flex';
-                    icon.textContent = '☁️';
+                    icon.innerHTML = '&#9729;';
                     indicator.title = 'Signed in - Progress saved to cloud';
                     break;
                 case 'error':
@@ -3130,7 +3130,7 @@
                 section.innerHTML = `
                     <div class="account-not-configured">
                         <p style="font-size: 0.85rem; color: var(--slate); text-align: center;">
-                            ☁️ Cloud sync available<br>
+                            &#9729; Cloud sync available<br>
                             <span style="font-size: 0.75rem;">(Configure Firebase to enable)</span>
                         </p>
                     </div>
@@ -3179,11 +3179,11 @@
         }
         
         function getSyncStatusText() {
-            if (!lastSyncTime) return '☁️ Not synced';
+            if (!lastSyncTime) return '&#9729; Not synced';
             const diff = Math.floor((new Date() - lastSyncTime) / 1000);
-            if (diff < 60) return '☁️ Just synced';
-            if (diff < 3600) return `☁️ ${Math.floor(diff / 60)}m ago`;
-            return `☁️ ${Math.floor(diff / 3600)}h ago`;
+            if (diff < 60) return '&#9729; Just synced';
+            if (diff < 3600) return `&#9729; ${Math.floor(diff / 60)}m ago`;
+            return `&#9729; ${Math.floor(diff / 3600)}h ago`;
         }
         
         function updateSyncStatus(status) {
@@ -3218,9 +3218,9 @@
         <div class="menu-bar">
             <button class="menu-btn" type="button" onclick="openAchievementsModal()" aria-label="View Achievements">🏆<span class="menu-text"> Achievements</span></button>
             <div class="sync-indicator" id="sync-indicator" onclick="openDifficultyModal()" title="Cloud sync status" style="display: none;">
-                <span class="sync-icon" id="sync-icon">☁️</span>
+                <span class="sync-icon" id="sync-icon">&#9729;</span>
             </div>
-            <button class="menu-btn" type="button" onclick="openDifficultyModal()" aria-label="Open Menu">☰<span class="menu-text"> Menu</span></button>
+            <button class="menu-btn" type="button" onclick="openDifficultyModal()" aria-label="Open Menu">&#9776;<span class="menu-text"> Menu</span></button>
         </div>
         
         <div class="header">
@@ -3229,7 +3229,7 @@
                 <span id="token-count">0</span>
             </div>
             <h1 class="title">Quotle</h1>
-            <p class="subtitle" id="subtitle-text">Daily Quote Puzzle • 4 Tries</p>
+            <p class="subtitle" id="subtitle-text">Daily Quote Puzzle &bull; 4 Tries</p>
             <div class="challenge-badge" id="challenge-badge" style="display: none;">
                 <span class="challenge-badge-icon" id="challenge-icon">📚</span>
                 <span class="challenge-badge-text" id="challenge-text">Literature</span>
@@ -3312,7 +3312,7 @@
             
             <!-- 0. ACCOUNT (Cloud Sync) -->
             <div class="modal-section">
-                <h3>☁️ Account</h3>
+                <h3>&#9729; Account</h3>
                 <div id="account-section">
                     <!-- Populated by GSAuth.updateUI() -->
                     <div class="account-signed-out">
@@ -3326,7 +3326,7 @@
             
             <!-- 1. DIFFICULTY -->
             <div class="modal-section">
-                <h3>⚙️ Difficulty</h3>
+                <h3>&#9881; Difficulty</h3>
                 <div class="difficulty-option" id="easy-option" onclick="setDifficulty('easy')">
                     <h4>🟢 Easy Mode</h4>
                     <p>Dropdown filters to matching authors. Get hints for Gender, Category, and Time Period after each guess.</p>
@@ -3434,7 +3434,7 @@
                     <p><strong>Quote #:</strong> <span id="current-quote-number">Loading...</span></p>
                     <p><strong>Total Quotes:</strong> 365</p>
                     <p><strong>Days Live:</strong> <span id="days-since-launch">Loading...</span></p>
-                    <p><strong>Version:</strong> v1.0.1</p>
+                    <p><strong>Version:</strong> v1.0.2</p>
                 </div>
                 <p style="margin-top: 10px; font-size: 0.85rem; color: var(--slate); line-height: 1.5;">
                     A daily quote guessing game featuring wisdom from ancient philosophers to modern thinkers - spanning over 2,500 years of human thought.
@@ -3719,10 +3719,10 @@
 
     <!-- Game Shelf Integration Module -->
     <script>
-        // ============ GAME SHELF INTEGRATION MODULE v1.0.1 ============
+        // ============ GAME SHELF INTEGRATION MODULE v1.0.2 ============
         (function() {
             'use strict';
-            const GAMESHELF_VERSION = '1.0.1';
+            const GAMESHELF_VERSION = '1.0.2';
             if (window.GameShelfIntegration) return;
             
             window.GameShelfIntegration = {
@@ -3738,7 +3738,7 @@
                         name: config.name || gameId,
                         icon: config.icon || '🎮',
                         url: config.url || window.location.hostname,
-                        version: config.version || '1.0.1',
+                        version: config.version || '1.0.2',
                         type: config.type || 'daily',
                         ...config
                     };
@@ -9142,7 +9142,7 @@
             
             const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             document.getElementById('subtitle-text').innerHTML =
-                `Quote #${currentQuote.index} • ${dateStr} <span class="practice-badge">Practice</span>`;
+                `Quote #${currentQuote.index} &bull; ${dateStr} <span class="practice-badge">Practice</span>`;
             
             // Reset game area
             document.getElementById('game-area').style.display = 'block';
@@ -9802,7 +9802,7 @@
             
             // Update subtitle with quote number
             const quoteNumber = currentQuote.index || (dailyQuoteIndex + 1);
-            document.getElementById('subtitle-text').textContent = `Quote #${quoteNumber} • 4 Tries`;
+            document.getElementById('subtitle-text').innerHTML = `Quote #${quoteNumber} &bull; 4 Tries`;
             
             // Display quote (remove trailing period if present)
             const quoteText = currentQuote.text.replace(/\.$/, '');
@@ -9886,7 +9886,7 @@
             
             // Update subtitle with quote number
             const quoteNumber = todayResult.quote.index || 'N/A';
-            document.getElementById('subtitle-text').textContent = `Quote #${quoteNumber} • Completed`;
+            document.getElementById('subtitle-text').innerHTML = `Quote #${quoteNumber} &bull; Completed`;
             
             // Show challenge badge
             showChallengeBadge(todayResult.quote);
@@ -9916,7 +9916,7 @@
                     <div class="reveal">
                         <div style="font-style: italic; margin-bottom: 15px;">"${todayResult.quote.text}"</div>
                         <strong>${todayResult.quote.author}</strong><br>
-                        ${todayResult.quote.gender} • ${todayResult.quote.category} • ${todayResult.quote.period}
+                        ${todayResult.quote.gender} &bull; ${todayResult.quote.category} &bull; ${todayResult.quote.period}
                     </div>
                     
                     <div style="margin-top: 15px; padding: 10px 20px; background: ${diffColor}; color: white; display: inline-block; border-radius: 5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.9rem;">
@@ -10250,7 +10250,7 @@
                 </div>
                 <div style="text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.1);">
                     <small style="color: var(--slate); font-size: 0.8rem;">
-                        💡 Historical context • <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(currentQuote.author.replace(/ /g, '_'))}" target="_blank" rel="noopener noreferrer" style="color: var(--burgundy);">Learn more on Wikipedia →</a>
+                        💡 Historical context &bull; <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(currentQuote.author.replace(/ /g, '_'))}" target="_blank" rel="noopener noreferrer" style="color: var(--burgundy);">Learn more on Wikipedia →</a>
                     </small>
                 </div>
             `;
@@ -10978,7 +10978,7 @@
                         <p>${perfectGame ? '<strong style="font-size: 1.1rem; color: var(--gold);">FIRST TRY!</strong><br>' : ''}You got it in ${guesses.length} ${guesses.length === 1 ? 'try' : 'tries'}!</p>
                         <div class="reveal">
                             <strong>${currentQuote.author}</strong><br>
-                            <span style="font-size: 0.85rem;">${currentQuote.gender} • ${currentQuote.category} • ${currentQuote.period}</span><br>
+                            <span style="font-size: 0.85rem;">${currentQuote.gender} &bull; ${currentQuote.category} &bull; ${currentQuote.period}</span><br>
                             <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(currentQuote.author.replace(/ /g, '_'))}" 
                                target="_blank" 
                                rel="noopener noreferrer"
@@ -11032,7 +11032,7 @@
                         <p>The correct answer was:</p>
                         <div class="reveal">
                             <strong>${currentQuote.author}</strong><br>
-                            <span style="font-size: 0.85rem;">${currentQuote.gender} • ${currentQuote.category} • ${currentQuote.period}</span><br>
+                            <span style="font-size: 0.85rem;">${currentQuote.gender} &bull; ${currentQuote.category} &bull; ${currentQuote.period}</span><br>
                             <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(currentQuote.author.replace(/ /g, '_'))}" 
                                target="_blank" 
                                rel="noopener noreferrer"
@@ -11171,7 +11171,7 @@
             name: 'Quotle',
             icon: '💬',
             url: 'quotle.game',
-            version: '1.0.1',
+            version: '1.0.2',
             type: 'daily'
         });
         
