@@ -1,10 +1,15 @@
-Quotle v1.0.6
+Quotle v1.0.7
 =============
 Release Date: January 23, 2025
 
-APP ICON WITH GS ORIGINALS BADGE
---------------------------------
-Updated icon featuring:
-- Speech balloon with quotation marks
-- Game Shelf puzzle piece logo at bottom center
-- Identifies as part of the GS Originals family
+PWA NOTCH/SAFE AREA FIX
+-----------------------
+Fixed layout issues on iPhones with notch/Dynamic Island:
+
+- Body padding now includes safe-area-inset-top
+- Container padding uses calc() for consistent spacing
+- Menu bar changed to position:fixed with safe-area offsets
+- Buttons no longer hidden under the notch in PWA mode
+
+The game now displays properly when installed as a PWA
+on devices with notches or Dynamic Island.

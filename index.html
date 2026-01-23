@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-    <meta name="version" content="1.0.6">
+    <meta name="version" content="1.0.7">
     <title>Quotle - Daily Quote Puzzle</title>
     
     <!-- Early initialization: Set defaults and apply dark mode BEFORE any CSS renders -->
@@ -106,6 +106,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
             position: relative;
             overflow-x: hidden;
             width: 100%;
@@ -1703,8 +1704,8 @@
             
             .container {
                 padding: 15px 12px;
-                padding-top: max(15px, env(safe-area-inset-top, 15px));
-                padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+                padding-top: calc(env(safe-area-inset-top, 0px) + 15px);
+                padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
                 box-shadow: none;
                 max-width: 100%;
                 width: 100%;
@@ -1736,8 +1737,9 @@
             }
             
             .menu-bar {
-                top: 10px;
-                right: 10px;
+                position: fixed;
+                top: calc(env(safe-area-inset-top, 0px) + 10px);
+                right: calc(env(safe-area-inset-right, 0px) + 10px);
             }
             
             /* Hide "Menu" text on mobile, show only icon */
@@ -3443,7 +3445,7 @@
                     <p><strong>Quote #:</strong> <span id="current-quote-number">Loading...</span></p>
                     <p><strong>Total Quotes:</strong> 365</p>
                     <p><strong>Days Live:</strong> <span id="days-since-launch">Loading...</span></p>
-                    <p><strong>Version:</strong> v1.0.6</p>
+                    <p><strong>Version:</strong> v1.0.7</p>
                 </div>
                 <p style="margin-top: 10px; font-size: 0.85rem; color: var(--slate); line-height: 1.5;">
                     A daily quote guessing game featuring wisdom from ancient philosophers to modern thinkers - spanning over 2,500 years of human thought.
@@ -3728,10 +3730,10 @@
 
     <!-- Game Shelf Integration Module -->
     <script>
-        // ============ GAME SHELF INTEGRATION MODULE v1.0.6 ============
+        // ============ GAME SHELF INTEGRATION MODULE v1.0.7 ============
         (function() {
             'use strict';
-            const GAMESHELF_VERSION = '1.0.6';
+            const GAMESHELF_VERSION = '1.0.7';
             if (window.GameShelfIntegration) return;
             
             window.GameShelfIntegration = {
@@ -3747,7 +3749,7 @@
                         name: config.name || gameId,
                         icon: config.icon || '🎮',
                         url: config.url || window.location.hostname,
-                        version: config.version || '1.0.6',
+                        version: config.version || '1.0.7',
                         type: config.type || 'daily',
                         ...config
                     };
@@ -11180,7 +11182,7 @@
             name: 'Quotle',
             icon: '💬',
             url: 'quotle.game',
-            version: '1.0.6',
+            version: '1.0.7',
             type: 'daily'
         });
         
