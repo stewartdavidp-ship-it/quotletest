@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-    <meta name="version" content="1.0.7">
+    <meta name="version" content="1.0.8">
     <title>Quotle - Daily Quote Puzzle</title>
     
     <!-- Early initialization: Set defaults and apply dark mode BEFORE any CSS renders -->
@@ -97,45 +97,37 @@
         
         body {
             font-family: 'Source Serif 4', serif;
-            background: var(--cream);
+            background: var(--card-bg);
             color: var(--ink);
             transition: background 0.3s ease, color 0.3s ease;
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 20px;
-            padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
+            padding: 0;
+            padding-top: env(safe-area-inset-top, 0);
+            padding-bottom: env(safe-area-inset-bottom, 0);
+            padding-left: env(safe-area-inset-left, 0);
+            padding-right: env(safe-area-inset-right, 0);
             position: relative;
             overflow-x: hidden;
             width: 100%;
             max-width: 100%;
         }
         
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.01) 2px, rgba(0,0,0,0.01) 4px);
-            pointer-events: none;
-            z-index: 1;
-        }
+        /* Removed decorative pattern for cleaner edge-to-edge look */
         
         .container {
             max-width: 700px;
             width: 100%;
-            background: white;
-            border: 3px solid var(--ink);
-            box-shadow: 12px 12px 0 rgba(0,0,0,0.1);
-            padding: 50px 40px;
+            flex: 1;
+            background: var(--card-bg);
+            border: none;
+            box-shadow: none;
+            padding: 20px 20px 40px;
             position: relative;
             z-index: 2;
-            animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
         @keyframes slideIn {
@@ -2132,15 +2124,12 @@
             color: #e8e6e3;
         }
 
-        [data-theme="dark"] body::before {
-            background-image:
-            repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
-        }
+        /* Removed dark mode pattern */
 
         [data-theme="dark"] .container {
-            background: #2d2d2d;
-            border: 3px solid #444;
-            box-shadow: 12px 12px 0 rgba(0,0,0,0.3);
+            background: var(--card-bg);
+            border: none;
+            box-shadow: none;
         }
 
         [data-theme="dark"] .header {
@@ -3445,7 +3434,7 @@
                     <p><strong>Quote #:</strong> <span id="current-quote-number">Loading...</span></p>
                     <p><strong>Total Quotes:</strong> 365</p>
                     <p><strong>Days Live:</strong> <span id="days-since-launch">Loading...</span></p>
-                    <p><strong>Version:</strong> v1.0.7</p>
+                    <p><strong>Version:</strong> v1.0.8</p>
                 </div>
                 <p style="margin-top: 10px; font-size: 0.85rem; color: var(--slate); line-height: 1.5;">
                     A daily quote guessing game featuring wisdom from ancient philosophers to modern thinkers - spanning over 2,500 years of human thought.
@@ -3730,10 +3719,10 @@
 
     <!-- Game Shelf Integration Module -->
     <script>
-        // ============ GAME SHELF INTEGRATION MODULE v1.0.7 ============
+        // ============ GAME SHELF INTEGRATION MODULE v1.0.8 ============
         (function() {
             'use strict';
-            const GAMESHELF_VERSION = '1.0.7';
+            const GAMESHELF_VERSION = '1.0.8';
             if (window.GameShelfIntegration) return;
             
             window.GameShelfIntegration = {
@@ -3749,7 +3738,7 @@
                         name: config.name || gameId,
                         icon: config.icon || '🎮',
                         url: config.url || window.location.hostname,
-                        version: config.version || '1.0.7',
+                        version: config.version || '1.0.8',
                         type: config.type || 'daily',
                         ...config
                     };
@@ -11182,7 +11171,7 @@
             name: 'Quotle',
             icon: '💬',
             url: 'quotle.game',
-            version: '1.0.7',
+            version: '1.0.8',
             type: 'daily'
         });
         

@@ -1,20 +1,20 @@
 /**
  * Quotle PWA Service Worker
- * Version: 1.0.7
+ * Version: 1.0.8
  * 
  * ⚠️ IMPORTANT: CACHE_VERSION must match app version!
  * When updating the app, change both:
  * 1. The version in index.html <meta name="version">
  * 2. CACHE_VERSION below
  */
-const CACHE_VERSION = 'v1.0.7';
+const CACHE_VERSION = 'v1.0.8';
 const CACHE_NAME = `quotle-pwa-${CACHE_VERSION}`;
 
 // Files to cache for offline use
 const CACHE_FILES = [
-    './',
-    './index.html',
-    './manifest.json'
+    '/',
+    '/index.html',
+    '/manifest.json'
 ];
 
 // Google Fonts to cache
@@ -106,7 +106,7 @@ self.addEventListener('fetch', (event) => {
                 // Network failed and not in cache
                 // For navigation requests, return the cached index.html
                 if (event.request.mode === 'navigate') {
-                    return caches.match('./index.html');
+                    return caches.match('/index.html');
                 }
                 return new Response('Offline', { status: 503 });
             });
