@@ -1,13 +1,13 @@
 /**
  * Quotle PWA Service Worker
- * Version: 1.0.3
+ * Version: 1.0.6
  * 
  * ⚠️ IMPORTANT: CACHE_VERSION must match app version!
  * When updating the app, change both:
  * 1. The version in index.html <meta name="version">
  * 2. CACHE_VERSION below
  */
-const CACHE_VERSION = 'v1.0.3';
+const CACHE_VERSION = 'v1.0.6';
 const CACHE_NAME = `quotle-pwa-${CACHE_VERSION}`;
 
 // Files to cache for offline use
