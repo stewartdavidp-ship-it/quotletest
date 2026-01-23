@@ -1,24 +1,20 @@
-quotle v1.0.4 Release Notes
-================================
+Quotle v1.0.3
+=============
+Release Date: January 23, 2025
 
-Release Date: 2026-01-22
+PWA PATH FIX
+------------
+Fixed 404 errors when opening Quotle as a PWA.
 
-Changes in v1.0.4:
-------------------
-- Added gs-app-id meta tag for reliable app detection
-- Google Analytics 4 tracking (G-XRL2SVN0YF)
-- Fixed all version strings for consistency
+The Issue:
+- manifest.json used absolute paths ("/index.html", "/")
+- sw.js used absolute paths for caching
+- On GitHub Pages, app lives at /Quotle/ not /
+- PWA tried to load from root → 404
 
-Version Locations:
------------------
-- Meta tag: 1.0.4
-- Service Worker: v1.0.4
-- About/Info UI: v1.0.4
-- (Game Shelf Module: 1.0.2 - separate)
+Fixed:
+- manifest.json: start_url and scope now use "./" (relative)
+- sw.js: CACHE_FILES now use "./" (relative)
+- sw.js: Offline fallback uses "./index.html"
 
-Files Included:
---------------
-- index.html (main app)
-- sw.js (service worker)
-- manifest.json (PWA manifest)
-- icons/ (PWA icons)
+This allows the PWA to work correctly on GitHub Pages.
