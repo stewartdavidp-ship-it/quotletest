@@ -2,12 +2,12 @@
     "name": "Quotle - Daily Quote Puzzle",
     "short_name": "Quotle",
     "description": "Daily quote guessing game. Identify the author in 4 tries!",
-    "start_url": "/index.html",
+    "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#1a1a1a",
     "theme_color": "#8B2635",
     "orientation": "portrait",
-    "scope": "/",
+    "scope": "./",
     "icons": [
         {
             "src": "icons/icon-72.png",
