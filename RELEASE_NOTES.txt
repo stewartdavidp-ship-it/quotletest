@@ -1,15 +1,11 @@
-Quotle v1.0.7
+Quotle v1.1.1
 =============
-Release Date: January 23, 2025
+Release Date: January 25, 2026
 
-PWA NOTCH/SAFE AREA FIX
------------------------
-Fixed layout issues on iPhones with notch/Dynamic Island:
-
-- Body padding now includes safe-area-inset-top
-- Container padding uses calc() for consistent spacing
-- Menu bar changed to position:fixed with safe-area offsets
-- Buttons no longer hidden under the notch in PWA mode
-
-The game now displays properly when installed as a PWA
-on devices with notches or Dynamic Island.
+GAME SHELF HINT HELPER INTEGRATION
+----------------------------------
+- Added storeHintData() function  
+- Automatically saves quote data to localStorage when game loads
+- Enables Game Shelf Hint Helper to auto-detect puzzle data
+- Exposes quote text, category, period, difficulty (NOT the author)
+- Data stored as gameshelf_hint_data key
